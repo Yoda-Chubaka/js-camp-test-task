@@ -84,35 +84,27 @@ const team = [
 
 
 function calculateTeamFinanceReport(salaries, team) {
-  const proffNames = Object.keys(salaries);
-  let proffesions = new Map();
-  let dept = {};
-  let value = 0;
+    let report = {
+        totalBudgetTeam: 0,
+    };
 
-  for (let i = 0; i < team.length; i++) {
-    let specialization = team[i].specialization;
-    proffNames.forEach(proffesion => {
-      if (specialization === proffesion) {
-        value = salaries[proffesion]['salary'] || 0;
-        if (!dept[proffesion]) {
-          proffesions.set(proffesion, 0);
-          dept[proffesion] = 0;
+    // Initialize total budgets for each specialization
+    for (let specialization in salaries) {
+        report[`totalBudget${specialization}`] = 0;
+    }
+
+    // Calculate total budget for the team
+    for (let member of team) {
+        if (member.specialization in salaries) {
+            let salary = salaries[member.specialization].salary;
+            let taxPercent = parseInt(salaries[member.specialization].tax);
+            let salaryWithTax = Math.floor(salary * (1 + taxPercent / 100));
+            report.totalBudgetTeam += salaryWithTax;
+            report[`totalBudget${member.specialization}`] += salaryWithTax;
         }
-        dept[proffesion] = value;
-        let v = proffesions.get(proffesion);
-        value = v + value;
-        proffesions.set(proffesion, value);
-      }
-    });
-  }
-  return proffesions
-}
+    }
 
-console.log(Array.from(calculateTeamFinanceReport(salaries, team).entries()));
-
-
-function totalMembers(teams, selectedTeam) {
-     return teams.filter(team => team === selectedTeam)?.length;
+    return report;
 }
  
 
