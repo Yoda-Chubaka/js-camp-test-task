@@ -81,32 +81,64 @@ const team = [
 ]
 
 
+// // OPTION 1
+// function calculateTeamFinanceReport(salaries, team) {
+//     let report = {
+//         totalBudgetTeam: 0,
+//     };
+
+//     // Initialize total budgets for each specialization
+//     for (let specialization in salaries) {
+//         report[`totalBudget${specialization}`] = 0;
+//     }
+
+//     // Calculate total budget for the team
+//     for (let member of team) {
+//         if (member.specialization in salaries) {
+//             let salary = salaries[member.specialization].salary;
+//             let taxPercent = parseInt(salaries[member.specialization].tax);
+//             let salaryWithTax = Math.floor(salary * (1 + taxPercent / 100));
+//             report.totalBudgetTeam += salaryWithTax;
+//             report[`totalBudget${member.specialization}`] += salaryWithTax;
+//         }
+//     }
+
+//     return report;
+// }
 
 
-function calculateTeamFinanceReport(salaries, team) {
-    let report = {
-        totalBudgetTeam: 0,
-    };
+// OPTION 2
+// function calculateTeamFinanceReport(salaries, team){
+//  const res = { sumAllSalary: 0 };
 
-    // Initialize total budgets for each specialization
-    for (let specialization in salaries) {
-        report[`totalBudget${specialization}`] = 0;
-    }
+//  for (const employee of team) {
+//    if (!res.hasOwnProperty(employee.specialization)) {
+//      res[employee.specialization] = salaries[employee.specialization].salary;
+//    } else {
+//      res[employee.specialization] += salaries[employee.specialization].salary;
+//    }
+//    res.sumAllSalary += salaries[employee.specialization].salary;
+//   }
 
-    // Calculate total budget for the team
-    for (let member of team) {
-        if (member.specialization in salaries) {
-            let salary = salaries[member.specialization].salary;
-            let taxPercent = parseInt(salaries[member.specialization].tax);
-            let salaryWithTax = Math.floor(salary * (1 + taxPercent / 100));
-            report.totalBudgetTeam += salaryWithTax;
-            report[`totalBudget${member.specialization}`] += salaryWithTax;
-        }
-    }
+//  return res;
+// }
 
-    return report;
-}
- 
+
+// function calculateTeamFinanceReport(salaries, team){
+//   const bySpec = team.reduce((acc, { specialization: spec }) => {
+//     if (!Object.hasOwn(acc, spec)) acc[spec] = 0;
+//     const { salary, tax } = salaries[spec];
+//     const k = 1 + parseFloat(tax) / 100;
+//     acc[spec] += salary * k;
+
+//     return acc;
+//   }, {});
+
+//   const totalBudgetTeam = Object.values(bySpec).reduce((acc, c) => acc + c);
+//   const result = Object.fromEntries(Object.entries(bySpec).map(([key, value]) => ['totalBudget' + key, value]));
+
+//   return { totalBudgetTeam, ...result };
+// }
 
 
 
