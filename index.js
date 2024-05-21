@@ -89,13 +89,13 @@ function calculateTeamFinanceReport(salaries, team) {
         report[`totalBudget${specialization}`] = 0;
     }
 
-    for (let member of team) {
-        if (member.specialization in salaries) {
-            const salary = salaries[member.specialization].salary;
-            const taxPercent = parseInt(salaries[member.specialization].tax);
+    for (let item of team) {
+        if (item.specialization in salaries) {
+            const salary = salaries[item.specialization].salary;
+            const taxPercent = parseInt(salaries[item.specialization].tax);
             const salaryWithTax = Math.trunc(salary * (1 + taxPercent / 100));
             report.totalBudgetTeam += salaryWithTax;
-            report[`totalBudget${member.specialization}`] += salaryWithTax;
+            report[`totalBudget${item.specialization}`] += salaryWithTax;
         }
     }
     return report;
