@@ -82,29 +82,28 @@ const team = [
 
 
 // // OPTION 1
-// function calculateTeamFinanceReport(salaries, team) {
-//     let report = {
-//         totalBudgetTeam: 0,
-//     };
+function calculateTeamFinanceReport(salaries, team) {
+    let report = {
+        totalBudgetTeam: 0,
+    };
 
-//     // Initialize total budgets for each specialization
-//     for (let specialization in salaries) {
-//         report[`totalBudget${specialization}`] = 0;
-//     }
+    // Initialize total budgets for each specialization
+    for (let specialization in salaries) {
+        report[`totalBudget${specialization}`] = 0;
+    }
 
-//     // Calculate total budget for the team
-//     for (let member of team) {
-//         if (member.specialization in salaries) {
-//             let salary = salaries[member.specialization].salary;
-//             let taxPercent = parseInt(salaries[member.specialization].tax);
-//             let salaryWithTax = Math.floor(salary * (1 + taxPercent / 100));
-//             report.totalBudgetTeam += salaryWithTax;
-//             report[`totalBudget${member.specialization}`] += salaryWithTax;
-//         }
-//     }
-
-//     return report;
-// }
+    // Calculate total budget for the team
+    for (let member of team) {
+        if (member.specialization in salaries) {
+            const salary = salaries[member.specialization].salary;
+            const taxPercent = parseInt(salaries[member.specialization].tax);
+            const salaryWithTax = Math.trunc(salary * (1 + taxPercent / 100));
+            report.totalBudgetTeam += salaryWithTax;
+            report[`totalBudget${member.specialization}`] += salaryWithTax;
+        }
+    }
+    return report;
+}
 
 
 // OPTION 2
